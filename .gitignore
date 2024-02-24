@@ -1,0 +1,7 @@
+#Compiledd files
+*.exe
+*.s
+*.asm
+
+#Lang files
+*.sun
