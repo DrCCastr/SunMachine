@@ -81,11 +81,19 @@ double evaluateExpression(const std::string& expression) {
 }
 
 std::ofstream CreateFile(std::string path) {
-    std::ofstream file(path+"app.s");
+    path += "/app.s";
+    std::ofstream file(path);
+    
+    file << ".global _start \n";
+    file << ".intel_syntax noprefix \n";
+    file << "\n";
+    file << "_start\n";
+    
     return file;
 }
 
 void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
+    std::ofstream file = CreateFile(path);
     int i = 0;
     while (i < Tokens.size()) {
         std::cout << Tokens[i] << " -- ";
@@ -97,9 +105,9 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
     {
         if (Tokens[i] == "p1" && i + 2 < Tokens.size()) {
             if (Tokens[i + 1] == "t1s1") {
-                std::cout << Tokens[i + 2] << std::endl;
+                //std::cout << Tokens[i + 2] << std::endl;
             } else if (Tokens[i+1] == "t1e1") {
-                std::cout << evaluateExpression(Tokens[i+2]) << std::endl;
+                //std::cout << evaluateExpression(Tokens[i+2]) << std::endl;
             }
         }
     i++;
