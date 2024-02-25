@@ -4,5 +4,8 @@
 *.o
 *.obj
 
+#Makefile
+makefile
+
 #Lang files
 *.sun

@@ -8,4 +8,5 @@ comp:
 	clear
 
 asm:
-	
+	nasm app.s - o OBJ/app.obj -f win64
+	gcc OBJ/app.obj -o OBJ/app -no-pie
