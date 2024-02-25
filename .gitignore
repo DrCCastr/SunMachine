@@ -3,8 +3,6 @@
 *.s
 *.o
 *.obj
-obj/*
-output/*
 
 #Lang files
 *.sun
