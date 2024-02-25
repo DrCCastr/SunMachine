@@ -1,7 +1,6 @@
 #Compiled files
 *.exe
 *.s
-*.asm
 *.o
 *.obj
 obj/*
