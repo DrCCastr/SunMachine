@@ -2,6 +2,10 @@
 *.exe
 *.s
 *.asm
+*.o
+*.obj
+obj/*
+output/*
 
 #Lang files
 *.sun

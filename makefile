@@ -1,9 +1,11 @@
 CC = g++
-EXE = output/app
+EXE = comp/output/compiler
 
-FILES = src/lexer.cpp src/main.cpp src/SMachine.cpp
+FILES = comp/src/lexer.cpp comp/src/main.cpp com/src/SMachine.cpp
 
-all: compile
-
-compile:
+comp:
 	$(CC) $(FILES) -o $(EXE)
+	clear
+
+asm:
+	
