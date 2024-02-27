@@ -22,10 +22,10 @@ std::ofstream CreateFile(std::string path, std::vector<std::string> strings_lite
     while (i < strings_literal.size()) {
         file << "@.strltr_";
         file << i;
-        file << ` = private unnamed_addr constant [13 x i8] c";
+        file << " = private unnamed_addr constant [13 x i8] c\"";
         file << strings_literal[i];
         file << R"(\0A\00)";
-        file << "'\n";
+        file << "\"\n";
         i++;
     }
     
