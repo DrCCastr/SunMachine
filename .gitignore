@@ -1,8 +1,9 @@
 #Compiled files
 *.exe
-*.s
 *.o
 *.obj
+*.s
+*.asm
 
 #Makefile
 makefile
