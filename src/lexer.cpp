@@ -20,13 +20,33 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
         bool AddPrint = false;
         std::string Character = "";
         std::string tok = "";
+        std::string defName = "";
         while (file.get(Char)) {
             if (Index::debug == true) {
                 std::cout << Char << " -- " << tok << " -- " << args.Expr << std::endl;
             }
             Character = Char;
+            defName += Character;
+            if (Character == " ") {
+                if (stats.fnNext == true && stats.fnCont == 0) {
+                    Tokens.push_back(defName);
+                    Tokens.push_back("i32");
+                    stats.fnNext = false;
+                }
+                if (stats.fnNext == true) {
+                    stats.fnCont -= 1;
+                }
+                defName = "";
+            }
             tok += Char;
             if (tok ==  " ") {
+                tok = "";
+            } else if (tok == "return") {
+                
+            }else if (tok == "fn") {
+                stats.fnNext = true;
+                stats.fnCont = 1;
+                Tokens.push_back("f1");
                 tok = "";
             } else if (tok == "system") {
                 stats.CanSystem = true;

@@ -2,6 +2,7 @@
 
 /*
 p1 == System / chamada do sistema para executar commando no terminal
+f1 = fn / funçao / definindo funçao
 
 t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1)
     s1 = string / texto
@@ -33,14 +34,14 @@ std::ofstream CreateFile(std::string path, std::vector<std::string> strings_lite
     }
     
     file << "declare i32 @system(i8*)\n"
-    "define i32 @main() {\n";
+    ;//"define i32 @main() {\n";
     
     return file;
 }
 
 void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
-    Sun::Str::compiling Compiling;
     int string_literal_index = 0;
+    bool first_fn = false;
     std::vector<std::string> strings_literal;
     int i = 0;
     while (i < Tokens.size()) {
@@ -79,14 +80,25 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
                 //strings_literal.push_back(Tokens[i+2]);
             } else if (Tokens[i+1] == "t1e1") {
             }
+        } else if (Tokens[i] == "fn") {
+            if (first_fn == true) {
+                file << "\t ret 132 0\n";
+                file << "}\n";
+            }
+            first_fn = true;
+            file << "define ";
+            file << Tokens[i+2];
+            file << " @";
+            file << Tokens[i+1];
+            file << "() {\n"; 
         }
     i++;
     }
     
-    file << "\tret i32 0\n"
-    "}\n"
-    "!0 = !{i32 42, null, !\"string\"}\n"
-    "!foo = !{!0}\n";
+    file << "\tret i32 0\n";
+    file << "}\n";
+    file << "!foo = !{!0}\n"
+    "!0 = !{i32 42, null, !\"string\"}\n";
     
     file.close();
     

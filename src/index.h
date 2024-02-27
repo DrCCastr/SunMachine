@@ -41,10 +41,8 @@ class Str {
         bool CanSystem = false;
         bool Argmenting = false;
         int ArgType = SUN_ARG_TYPE_NONE;
-    };
-    struct compiling
-    {
-        int Line = 3;
+        bool fnNext = true;
+        int fnCont = 0;
     };
     
 };
