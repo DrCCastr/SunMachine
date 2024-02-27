@@ -1,5 +1,8 @@
 # Projeto de linguagem de programação
+# Metas Batidas:
+## * Compilar pra .exe
+## * Printar
+## * Call system ( executar commando no terminal )
 # Metas
-## * Compilar pra assembly - Trabalhando
 ## * Expressoes numericas avançadas
 ## * Funçoes

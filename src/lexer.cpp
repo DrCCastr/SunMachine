@@ -28,13 +28,13 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
             tok += Char;
             if (tok ==  " ") {
                 tok = "";
-            } else if (tok == "print") {
-                stats.CanPrint = true;
+            } else if (tok == "system") {
+                stats.CanSystem = true;
                 Tokens.push_back("p1");
                 tok = "";
             } else if (tok == "(" or tok == ")") {
                 tok = "";
-                if (stats.CanPrint == true) {
+                if (stats.CanSystem == true) {
                     //stats.ArgType = SUN_ARG_TYPE_STRING;
                 }
                 if (stats.Argmenting == true) { stats.Argmenting = false; } else { stats.Argmenting = true; }
@@ -43,7 +43,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
             }
             
             if (Character == ",") {
-                if (stats.CanPrint == true) {
+                if (stats.CanSystem == true) {
                     if (stats.Argmenting == true) {
                         AddPrint = true;
                     }
@@ -68,7 +68,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                     stats.ArgType = SUN_ARG_TYPE_NONE;
                 } else if (stats.ArgType == SUN_ARG_TYPE_NONE) {
                     stats.ArgType = SUN_ARG_TYPE_STRING;
-                    if ( stats.CanPrint == true ) {
+                    if ( stats.CanSystem == true ) {
                         Tokens.push_back("t1s1");
                     }
                 }
@@ -80,7 +80,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                 ////// Verifica se o a Tipo de argumento e de string
                 if (stats.ArgType == SUN_ARG_TYPE_STRING) {
                     if ( Character != "'" and Char != '"' ) {
-                        args.ToPrint += Character;
+                        args.ToSystem += Character;
                     }
                     
                     tok = "";
@@ -92,17 +92,17 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
             if(Character == ";"){
                 tok = "";
                 ////// Verifica se tem um print disponivel
-                if (args.ToPrint != "" && stats.CanPrint == true) {
-                    Tokens.push_back(args.ToPrint);
+                if (args.ToSystem != "" && stats.CanSystem == true) {
+                    Tokens.push_back(args.ToSystem);
                 }
-                if (args.Expr != "" and stats.CanPrint == true) {
+                if (args.Expr != "" and stats.CanSystem == true) {
                     Tokens.push_back(args.Expr);
                 }
                 //////
                 AddPrint = false;
                 args.Expr = "";
-                args.ToPrint = "";
-                stats.CanPrint = false;
+                args.ToSystem = "";
+                stats.CanSystem = false;
                 stats.ArgType = SUN_ARG_TYPE_NONE;
                 stats.Argmenting = false;
             }

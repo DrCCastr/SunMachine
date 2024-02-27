@@ -14,6 +14,7 @@
 #include <thread>
 #include <chrono>
 #include <cstdio>
+#include <cstring>
 
 #define SUN_ARG_TYPE_NONE 0
 #define SUN_ARG_TYPE_STRING 1
@@ -32,12 +33,12 @@ class Str {
     public:
     struct Args
     {
-        std::string ToPrint = "";
+        std::string ToSystem = "";
         std::string Expr = "";
     };
     struct Stats
     {
-        bool CanPrint = false;
+        bool CanSystem = false;
         bool Argmenting = false;
         int ArgType = SUN_ARG_TYPE_NONE;
     };

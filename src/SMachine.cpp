@@ -1,7 +1,7 @@
 #include "index.h"
 
 /*
-p1 == print / printar
+p1 == System / chamada do sistema para executar commando no terminal
 
 t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1)
     s1 = string / texto
@@ -12,7 +12,7 @@ t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1
 */
 
 std::ofstream CreateFile(std::string path, std::vector<std::string> strings_literal) {
-    path += "/temp.ll";
+    path += "/temp/temp.ll";
     std::ofstream file(path);
     int i = 0;
     
@@ -20,16 +20,19 @@ std::ofstream CreateFile(std::string path, std::vector<std::string> strings_lite
     "; AVISO: Caso mecha em alguma parte inconsientemente pode causar erros ao codigo final\n";
     
     while (i < strings_literal.size()) {
+        int strLen = strings_literal[i].size() + 1;
         file << "@.strltr_";
         file << i;
-        file << " = private unnamed_addr constant [13 x i8] c\"";
+        file << " = private unnamed_addr constant [";
+        file << strLen;
+        file << " x i8] c\"";
         file << strings_literal[i];
-        file << R"(\0A\00)";
+        file << R"(\00)";
         file << "\"\n";
         i++;
     }
     
-    file << "declare i32 @puts(i8* nocapture) nounwind\n"
+    file << "declare i32 @system(i8*)\n"
     "define i32 @main() {\n";
     
     return file;
@@ -54,14 +57,20 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
     {
         if (Tokens[i] == "p1" && i + 2 < Tokens.size()) {
             if (Tokens[i + 1] == "t1s1") { 
-                
-                file << "\t; Print\n"
+                int strLen = strings_literal[string_literal_index].size() + 1;
+                file << "\t; System call\n"
                 "\t%cast21";
                 file << string_literal_index;
-                file << " = getelementptr [13 x 18],[13 x i8]*@.strltr_";
+                file << " = getelementptr [";
+                file << strLen;
+                file << " x i8], [";
+                file << strLen;
+                file << " x i8]* @.strltr_";
                 file << string_literal_index;
-                file << ", i64 0, i64 0\n"
-                "\tcall i32 @puts(i8* %cast21";
+                file << ", i32 0, i32 0\n"
+                "\t%retval";
+                file << string_literal_index;
+                file << " = call i32 @system(i8* %cast21";
                 file << string_literal_index;
                 file << ")\n";
                 
@@ -74,19 +83,18 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
     i++;
     }
     
-    file << "\tret 132 0\n"
+    file << "\tret i32 0\n"
     "}\n"
-    "!0 = !{i32 42, null, !string}\n"
+    "!0 = !{i32 42, null, !\"string\"}\n"
     "!foo = !{!0}\n";
     
     file.close();
     
-    system("mkdir temp");
-    system("llvm-as temp.ll -o temp/temp.bc");
-    system("opt -03 temp/temp.bc -o temp/temp_opt.bc");
-    system("llc -03 temp/temp_opt.bc -o temp/temp.s");
+    system("llvm-as temp/temp.ll -o temp/temp.bc");
+    system("opt -O3 temp/temp.bc -o temp/temp_opt.bc");
+    system("llc -O3 temp/temp_opt.bc -o temp/temp.s");
     system("gcc -c temp/temp.s -o temp/temp.o");
     system("gcc temp/temp.o -o sun.exe");
-    system("rm temp");
+    system("rm -force temp");
 }
 
