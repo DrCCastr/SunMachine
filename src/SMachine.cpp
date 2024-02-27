@@ -12,33 +12,25 @@ t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1
 */
 
 std::ofstream CreateFile(std::string path, std::vector<std::string> strings_literal) {
-    path += "/temp.s";
+    path += "/temp.ll";
     std::ofstream file(path);
     int i = 0;
     
-    file << ";bits 64\n"
-    "default rel\n"
-    "section .bss\n"
-    "section .data\n";
+    file << "; arquivo gerado automaticamente\n"
+    "; AVISO: Caso mecha em alguma parte inconsientemente pode causar erros ao codigo final\n";
     
     while (i < strings_literal.size()) {
-        file << "string_literal_";
+        file << "@.strltr_";
         file << i;
-        file << " db '";
+        file << ` = private unnamed_addr constant [13 x i8] c";
         file << strings_literal[i];
-        file << "', 0\n";
+        file << R"(\0A\00)";
+        file << "'\n";
         i++;
     }
     
-    file << "section .text\n"
-    "global _start\n"
-    "extern ExitProcess\n"
-    "extern printf\n"
-    "extern scanf\n"
-    "_start:\n"
-    "\tPUSH rbp\n"
-    "\tMOV rbp, rsp\n"
-    "\tSUB rsp, 32\n";
+    file << "declare i32 @puts(i8* nocapture) nounwind\n"
+    "define i32 @main() {\n";
     
     return file;
 }
@@ -62,13 +54,16 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
     {
         if (Tokens[i] == "p1" && i + 2 < Tokens.size()) {
             if (Tokens[i + 1] == "t1s1") { 
-                file << "\t; print\n";
-                file << "\tLEA rcx, string_literal_";
+                
+                file << "\t; Print\n"
+                "\t%cast21";
                 file << string_literal_index;
-                file << "\n";
-                file << "\tXOR eax, eax\n";
-                file << "\tCALL printf\n";
-                file << "\t; end print\n";
+                file << " = getelementptr [13 x 18],[13 x i8]*@.strltr_";
+                file << string_literal_index;
+                file << ", i64 0, i64 0\n"
+                "\tcall i32 @puts(i8* %cast21";
+                file << string_literal_index;
+                file << ")\n";
                 
                 string_literal_index += 1;
                 //Compiling.Line += 1;
@@ -79,18 +74,19 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
     i++;
     }
     
-    file << "EXIT_LABEL:\n"
-    "\tXOR rax, rax\n"
-    "\tCALL ExitProcess";
-    std::cout << "assembling\n";
-    system("nasm -f elf64 temp.s -o temp.o");
-    std::cout << "compiling\n";
-    system("gcc -o app.exe temp.o -nostdlib -no-pie");
-    std::cout << "deleting temp files";
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    system("rm -f temp.s");
-    system("rm -f temp.o");
-    std::cout << "finalized";
+    file << "\tret 132 0\n"
+    "}\n"
+    "!0 = !{i32 42, null, !string}\n"
+    "!foo = !{!0}\n";
     
     file.close();
+    
+    system("mkdir temp");
+    system("llvm-as temp.ll -o temp/temp.bc");
+    system("opt -03 temp/temp.bc -o temp/temp_opt.bc");
+    system("llc -03 temp/temp_opt.bc -o temp/temp.s");
+    system("gcc -c temp/temp.s -o temp/temp.o");
+    system("gcc temp/temp.o -o sun.exe");
+    system("rm temp");
 }
+
