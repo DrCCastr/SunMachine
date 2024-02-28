@@ -1,4 +1,5 @@
 # Projeto de linguagem de programação
+# Aprenda a usar 👍
 # Metas Batidas:
 ## * Compilar pra .exe
 ## * Printar
