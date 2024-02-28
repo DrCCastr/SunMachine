@@ -15,6 +15,7 @@
 #include <chrono>
 #include <cstdio>
 #include <cstring>
+#include <tinyxml2.h>
 
 #define SUN_ARG_TYPE_NONE 0
 #define SUN_ARG_TYPE_STRING 1
