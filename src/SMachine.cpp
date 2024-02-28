@@ -1,8 +1,9 @@
 #include "index.h"
 
 /*
-p1 == System / chamada do sistema para executar commando no terminal
+p1 = System / chamada do sistema para executar commando no terminal
 f1 = fn / funçao / definindo funçao
+r1 = return / retorno da funçao
 
 t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1)
     s1 = string / texto
@@ -73,16 +74,17 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
                 file << string_literal_index;
                 file << " = call i32 @system(i8* %cast21";
                 file << string_literal_index;
-                file << ")\n";
+                file << ")\n"
+                "\t; End system call\n";
                 
                 string_literal_index += 1;
                 //Compiling.Line += 1;
                 //strings_literal.push_back(Tokens[i+2]);
             } else if (Tokens[i+1] == "t1e1") {
             }
-        } else if (Tokens[i] == "fn") {
+        } else if (Tokens[i] == "f1") {
             if (first_fn == true) {
-                file << "\t ret 132 0\n";
+                //file << "\tret i32 0\n";
                 file << "}\n";
             }
             first_fn = true;
@@ -91,12 +93,17 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
             file << " @";
             file << Tokens[i+1];
             file << "() {\n"; 
+        } else if (Tokens[i] == "r1") {
+            file << "\tret ";
+            file << Tokens[i+1];
+            file << " ";
+            file << Tokens[i+2];
+            file << " ; Return \n";
         }
     i++;
     }
-    
-    file << "\tret i32 0\n";
-    file << "}\n";
+    file << "\tret i32 0 ; Main return\n"
+    "}\n";
     file << "!foo = !{!0}\n"
     "!0 = !{i32 42, null, !\"string\"}\n";
     

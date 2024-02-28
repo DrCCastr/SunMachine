@@ -43,6 +43,7 @@ class Str {
         int ArgType = SUN_ARG_TYPE_NONE;
         bool fnNext = true;
         int fnCont = 0;
+        bool returning = true;
     };
     
 };

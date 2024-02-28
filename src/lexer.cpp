@@ -41,9 +41,14 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
             tok += Char;
             if (tok ==  " ") {
                 tok = "";
-            } else if (tok == "return") {
-                
-            }else if (tok == "fn") {
+            } else if (tok == "{" or tok == "}") {
+                tok == "";
+            //} else if (tok == "return") {
+            //    stats.returning = true;
+            //    Tokens.push_back("r1");
+            //    Tokens.push_back("i32");
+            //    tok = "";
+            } else if (tok == "fn") {
                 stats.fnNext = true;
                 stats.fnCont = 1;
                 Tokens.push_back("f1");
@@ -58,7 +63,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                     //stats.ArgType = SUN_ARG_TYPE_STRING;
                 }
                 if (stats.Argmenting == true) { stats.Argmenting = false; } else { stats.Argmenting = true; }
-            } else if (tok == "\n" or tok == ";") {
+            } else if (tok == "\n" or tok == ";" or tok == "\t") {
                 tok = "";
             }
             
@@ -110,8 +115,11 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
             //////
             ////// Quando terminar a linha //////
             if(Character == ";"){
-                tok = "";
                 ////// Verifica se tem um print disponivel
+                if (stats.returning == true ) {
+                    Tokens.push_back(tok.substr(0, 1));
+                    stats.returning = false;
+                }
                 if (args.ToSystem != "" && stats.CanSystem == true) {
                     Tokens.push_back(args.ToSystem);
                 }
@@ -125,6 +133,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                 stats.CanSystem = false;
                 stats.ArgType = SUN_ARG_TYPE_NONE;
                 stats.Argmenting = false;
+                tok = "";
             }
             //////
         } 
