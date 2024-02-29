@@ -37,6 +37,12 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                     stats.fnCont -= 1;
                 }
                 defName = "";
+            } else if (Character == "(") {
+                if (!stats.CanSystem) {
+                    Tokens.push_back("f2");
+                    Tokens.push_back(defName.replace(defName.size() - 1, 1, ""));
+                    defName = "";
+                }
             }
             tok += Char;
             if (tok ==  " ") {
@@ -122,6 +128,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                 }
                 if (args.ToSystem != "" && stats.CanSystem == true) {
                     Tokens.push_back(args.ToSystem);
+                    stats.CanSystem = false;
                 }
                 if (args.Expr != "" and stats.CanSystem == true) {
                     Tokens.push_back(args.Expr);
@@ -133,6 +140,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                 stats.CanSystem = false;
                 stats.ArgType = SUN_ARG_TYPE_NONE;
                 stats.Argmenting = false;
+                stats.CanSystem = false;
                 tok = "";
             }
             //////

@@ -3,6 +3,7 @@
 /*
 p1 = System / chamada do sistema para executar commando no terminal
 f1 = fn / funçao / definindo funçao
+f2 = fn() / funçao / executar funçao
 r1 = return / retorno da funçao
 
 t1 types/tipos = { -- todos objetos da lista estarao acrensetados a t1 (ex: t1s1)
@@ -84,7 +85,7 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
             }
         } else if (Tokens[i] == "f1") {
             if (first_fn == true) {
-                //file << "\tret i32 0\n";
+                file << "\tret i32 0 ; Main return\n";
                 file << "}\n";
             }
             first_fn = true;
@@ -99,6 +100,10 @@ void Sun::Index::Machine(std::vector<std::string> Tokens, std::string path) {
             file << " ";
             file << Tokens[i+2];
             file << " ; Return \n";
+        } else if (Tokens[i] == "f2") {
+            file << "\tcall i32 @";
+            file << Tokens[i+1];
+            file << "() ; Call function\n";
         }
     i++;
     }
