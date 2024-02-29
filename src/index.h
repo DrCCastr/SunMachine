@@ -1,21 +1,5 @@
 #pragma once
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <stack>
-#include <cctype>
-#include <sstream>
-#include <filesystem>
-#include <ostream>
-#include <cstdlib>
-#include <thread>
-#include <chrono>
-#include <cstdio>
-#include <cstring>
-#include <tinyxml2.h>
+#include "include.h"
 
 #define SUN_ARG_TYPE_NONE 0
 #define SUN_ARG_TYPE_STRING 1
@@ -48,5 +32,4 @@ class Str {
     };
     
 };
-
 }

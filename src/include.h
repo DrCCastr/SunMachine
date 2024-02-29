@@ -1,0 +1,19 @@
+#pragma once
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <cmath>
+#include <stack>
+#include <cctype>
+#include <sstream>
+#include <filesystem>
+#include <ostream>
+#include <cstdlib>
+#include <thread>
+#include <chrono>
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <tinyxml2.h>
