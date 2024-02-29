@@ -8,6 +8,7 @@
 ### - Dentro do {} voce podera executar commandos no terminal com system("commando no terminal")
 ### - Pra chamar outra funçao e so fazer nome_funçao();
 ### - Sempe coloque um ; no final da linha
+### - Commentarios / para começar e terminar ( eles nao sao de linha unica )
 ### - OBS: o primeiro system da funçao esta bugado coloque sempre um ";" no começo dele para resolver 
 # Metas Batidas:
 ## * Compilar pra .exe
