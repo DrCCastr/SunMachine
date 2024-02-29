@@ -18,6 +18,7 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
     if (file.is_open()) {
         char Char;
         bool AddPrint = false;
+        bool Comment = false;
         std::string Character = "";
         std::string tok = "";
         std::string defName = "";
@@ -43,8 +44,14 @@ std::vector<std::string> Sun::Index::lexer(std::string FilePath) {
                     Tokens.push_back(defName.replace(defName.size() - 1, 1, ""));
                     defName = "";
                 }
+            } else if (Character == "/") {
+                if (Comment == true) {Comment == false;} else {Comment == true;}
             }
             tok += Char;
+            if (Comment) {
+                tok = "";
+                Character = "";
+            }
             if (tok ==  " ") {
                 tok = "";
             } else if (tok == "{" or tok == "}") {
